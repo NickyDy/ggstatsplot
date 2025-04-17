@@ -5,10 +5,10 @@ diss<-read_csv("diss/diss.csv")
 glimpse(ath)
 summary(ath)
 
-otto %>% 
+cosm %>% 
 	ggbarstats(
-		participant_gender,
-		score,
+	  q7,
+	  age,
 		counts = NULL,
 		type = "p",
 		paired = FALSE,
@@ -26,15 +26,16 @@ otto %>%
 		title = NULL,
 		subtitle = NULL,
 		caption = NULL,
-		legend.title = "Gender",
-		xlab = "Score",
+		legend.title = "Answer:",
+		xlab = "Age",
 		ylab = NULL,
 		ggtheme = ggstatsplot::theme_ggstatsplot(),
 		package = "RColorBrewer",
 		palette = "Dark2",
-		ggplot.component = theme(text = element_text(size = 16), 
-														 plot.subtitle = element_text(size = 16)))
-ggsave("plot.png", width = 10, height = 5)
+		ggplot.component = theme(text = element_text(size = 14), 
+														 plot.subtitle = element_text(size = 14)))
+
+ggsave("plot.png", width = 8, height = 4.5)
 
 grouped_ggbarstats(
   data = ,
@@ -53,3 +54,16 @@ grouped_ggbarstats(
   sub.args = list(size = 12))
 
 ggsave("plot.png", width = 10, height = 5)
+
+cosm %>%
+  count(age, q9) %>% 
+  group_by(age) %>% 
+  mutate(perc = n / sum(n) * 100) %>% 
+  ggplot(aes(age, perc, fill = q9)) +
+  geom_col(color = "black") +
+  geom_text(aes(label = paste0(round(perc, 1), "%")), 
+            show.legend = F, color = "white", fontface = "bold",
+            position = position_stack(vjust = 0.5), size = 4) +
+  scale_fill_brewer(palette = "Dark2") +
+  labs(x = "Age", y = "Percent", fill = "Answer:") +
+  theme(text = element_text(size = 16))

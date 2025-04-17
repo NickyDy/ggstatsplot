@@ -10,10 +10,6 @@ mod1 <- glm(stress ~ ., data = stress, family = "binomial")
 mod2 <- glm(stress ~ stability + flexibility + tasks + lack_car_dev, data = stress, family = "binomial")
 mod3 <- glm(stress ~ stability + flexibility + tasks, data = stress, family = "binomial")
 
-summary(mod0)
-tidy(mod0) %>% arrange(-estimate) %>% gt::gt() %>% gt::fmt_number(decimals = 3)
-glance(mod0)
-
 ggcoefstats(
   mod0,
   statistic = NULL,

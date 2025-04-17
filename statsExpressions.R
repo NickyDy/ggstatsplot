@@ -1,9 +1,7 @@
-
 library(statsExpressions)
 library(tidyverse)
 
-load("diss.RData")
-load("climate.RData")
+diss <- read_csv("data/diss.csv")
 
 #Expression and dataframe for one-sample t-test
 one_sample_test(

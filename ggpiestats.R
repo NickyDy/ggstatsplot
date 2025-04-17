@@ -2,13 +2,14 @@ library(tidyverse)
 library(ggstatsplot)
 #library(unikn)
 #library(jcolors)
-library(ggsci)
 
 diss<-read_csv("diss/diss.csv", col_types = "fffff")
+cosm <- read_csv("~/Downloads/cosm.csv")
 
-ggpiestats(
-  data = diss,
-  x = top,
+cosm %>% 
+  filter(Age == "21-25") %>% 
+  ggpiestats(
+  x = q2,
   y = NULL,
   counts = NULL,
   type = "parametric",
@@ -39,10 +40,13 @@ ggpiestats(
 
 ggsave("plot.png", width = 10, height = 5)
 
-grouped_ggpiestats(
-  data,
-  grouping.var,
+cosm %>% 
+  grouped_ggpiestats(
+  x = q10,
+  grouping.var = Age,
   output = "plot",
+  legend.title = "Answer:",
+  bf.message = FALSE,
   plotgrid.args = list(),
   annotation.args = list())
 
